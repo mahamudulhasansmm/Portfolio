@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahamudul Hasan | Social Media Marketing Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            max-height: 400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 640px) {
+            .chart-container { height: 300px; }
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .active-tab {
+            border-bottom: 2px solid #ea580c;
+            color: #ea580c;
+            font-weight: 600;
+        }
+        .inactive-tab {
+            color: #57534e;
+        }
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals & Terracotta Accent -->
+    <!-- Application Structure Plan: The app follows a linear storytelling flow: Identity (Hero) -> Capability (Skills Viz) -> Offering (Services) -> Proof (Interactive Case Studies). A dashboard-style navigation bar allows jumping to sections. The Portfolio section uses a tabbed interactive interface to switch between project details without page reloads, allowing users to compare campaign goals and results easily. -->
+    <!-- Visualization & Content Choices: 
+        1. Skills Radar Chart: chosen to visually demonstrate the balanced skill set (Creative vs. Analytical) which is crucial for SMM.
+        2. Tools Proficiency Bar Chart: chosen to highlight technical competence in specific platforms.
+        3. Project Interaction: Tabbed content switching to keep the interface clean while housing detailed case study text.
+        4. Services Grid: Cards with hover effects to present the breadth of services clearly.
+        5. Icons: Unicode characters used instead of SVGs for lightweight, compatible visuals. 
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-orange-100 selection:text-orange-900">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-panel shadow-sm w-full border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold text-orange-600">MH.</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('hero')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Home</button>
+                    <button onclick="scrollToSection('about')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">About</button>
+                    <button onclick="scrollToSection('skills')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Skills</button>
+                    <button onclick="scrollToSection('services')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Services</button>
+                    <button onclick="scrollToSection('portfolio')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Portfolio</button>
+                </div>
+                <div class="md:hidden">
+                    <!-- Mobile Menu Button (Simple implementation) -->
+                    <button onclick="toggleMobileMenu()" class="text-stone-600 hover:text-orange-600 focus:outline-none">
+                        ☰
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <button onclick="scrollToSection('hero')" class="text-stone-600 hover:text-orange-600 text-sm font-medium py-2">Home</button>
+                    <button onclick="scrollToSection('about')" class="text-stone-600 hover:text-orange-600 text-sm font-medium py-2">About</button>
+                    <button onclick="scrollToSection('skills')" class="text-stone-600 hover:text-orange-600 text-sm font-medium py-2">Skills</button>
+                    <button onclick="scrollToSection('services')" class="text-stone-600 hover:text-orange-600 text-sm font-medium py-2">Services</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative bg-white overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20 px-4 sm:px-6 lg:px-8">
+                <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold tracking-wide uppercase mb-4">
+                            Social Media Marketer
+                        </span>
+                        <h1 class="text-4xl tracking-tight font-extrabold text-stone-900 sm:text-5xl md:text-6xl">
+                            <span class="block xl:inline">Mahamudul Hasan</span>
+                            <span class="block text-orange-600">Driving Growth Online</span>
+                        </h1>
+                        <p class="mt-3 text-base text-stone-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            Specializing in Facebook & Instagram marketing. I help businesses generate leads, increase engagement, and build their brand through strategic content and paid advertising.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="javascript:scrollToSection('portfolio')" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 md:py-4 md:text-lg transition-all">
+                                    View Projects
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="javascript:scrollToSection('services')" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-orange-700 bg-orange-100 hover:bg-orange-200 md:py-4 md:text-lg transition-all">
+                                    My Services
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- Decorative abstract background -->
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-stone-100 flex items-center justify-center">
+            <div class="p-8 text-stone-300 text-9xl opacity-20 font-black select-none">
+                SMM
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Skills Section -->
+    <section id="about" class="py-16 bg-stone-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center lg:text-left">
+                <h2 class="text-3xl font-extrabold text-stone-900">Expertise & Capabilities</h2>
+                <p class="mt-4 text-lg text-stone-600 max-w-3xl">
+                    I combine creative content production with data-driven advertising strategies. My goal is not just to post, but to drive tangible business results.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Chart 1: Core Competencies Radar -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-stone-800 mb-2">Core Competencies</h3>
+                    <p class="text-sm text-stone-500 mb-6">A balanced mix of creative and analytical skills.</p>
+                    <div class="chart-container">
+                        <canvas id="skillsRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Text Content & Tools -->
+                <div class="space-y-8">
+                    <!-- About Text -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500">
+                        <h3 class="text-lg font-bold text-stone-800 mb-2">👋 About Me</h3>
+                        <p class="text-stone-600 leading-relaxed">
+                            I am a social media marketer specializing in Facebook & Instagram. I have hands-on experience in content creation, video editing, Facebook boosting, and marketing strategy. I am continuously learning advanced Facebook Ads Manager techniques to stay ahead of the curve.
+                        </p>
+                    </div>
+
+                    <!-- Tools Grid -->
+                    <div>
+                        <h3 class="text-xl font-bold text-stone-800 mb-4">Tools & Platforms</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-blue-600 text-xl">📢</span>
+                                <span class="text-sm font-medium text-stone-700">FB Ads Manager</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-purple-600 text-xl">🎨</span>
+                                <span class="text-sm font-medium text-stone-700">Canva</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-indigo-600 text-xl">🎬</span>
+                                <span class="text-sm font-medium text-stone-700">Premiere Pro</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-sky-600 text-xl">📊</span>
+                                <span class="text-sm font-medium text-stone-700">Google Sheets</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-pink-600 text-xl">📸</span>
+                                <span class="text-sm font-medium text-stone-700">Instagram</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-sm">
+                                <span class="text-orange-600 text-xl">🖌️</span>
+                                <span class="text-sm font-medium text-stone-700">Illustrator</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white border-t border-stone-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-stone-900">Services I Offer</h2>
+                <p class="mt-4 text-stone-600 max-w-2xl mx-auto">
+                    Comprehensive social media solutions designed to take your brand from obscurity to visibility.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service 1 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">⚙️</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Page Setup & Optimisation</h3>
+                    <p class="text-stone-600 text-sm">Professional setup of Facebook Pages and Instagram Business Profiles, ensuring branding consistency.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">📅</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Content Planning</h3>
+                    <p class="text-stone-600 text-sm">Strategic content calendars and scheduling to keep your audience engaged consistently.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">🚀</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Ads Management</h3>
+                    <p class="text-stone-600 text-sm">Setup and management of Awareness, Traffic, and Lead campaigns using Ads Manager.</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">🎯</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Targeting & Research</h3>
+                    <p class="text-stone-600 text-sm">Deep dive into audience interests and demographics to ensure your ads reach the right people.</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">🎨</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Creative Design</h3>
+                    <p class="text-stone-600 text-sm">High-quality image and video ad creatives using Photoshop, Illustrator, and Premiere Pro.</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="service-card p-6 bg-stone-50 rounded-xl border border-stone-200 transition-all duration-300">
+                    <div class="text-3xl mb-4">📈</div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Analytics & Reporting</h3>
+                    <p class="text-stone-600 text-sm">Regular audits and performance reports to track ROI and optimize future campaigns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Portfolio (Interactive) -->
+    <section id="portfolio" class="py-16 bg-stone-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-10">
+                <h2 class="text-3xl font-extrabold text-stone-900">Project Showcase</h2>
+                <p class="mt-4 text-stone-600">
+                    Practical work demonstrating campaign management and creative execution.
+                </p>
+            </div>
+
+            <!-- Interactive Layout -->
+            <div class="flex flex-col md:flex-row gap-8">
+                
+                <!-- Sidebar List of Projects -->
+                <div class="md:w-1/3 space-y-4">
+                    <div id="project-list" class="flex flex-col space-y-2">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Detail View Panel -->
+                <div class="md:w-2/3 bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden relative min-h-[400px]">
+                    <div id="project-detail-container" class="p-8">
+                        <!-- Populated by JS -->
+                        <div class="animate-pulse space-y-4">
+                            <div class="h-8 bg-stone-200 rounded w-3/4"></div>
+                            <div class="h-4 bg-stone-200 rounded w-full"></div>
+                            <div class="h-4 bg-stone-200 rounded w-5/6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-300 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-4">Let's Work Together</h2>
+                <p class="mb-6 max-w-sm">Ready to boost your social media presence? I'm available for freelance projects on Upwork.</p>
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-stone-900 bg-white hover:bg-stone-100 transition-colors">
+                    Hire Me on Upwork
+                </a>
+            </div>
+            <div class="md:text-right">
+                <h3 class="text-lg font-semibold text-white mb-4">Contact</h3>
+                <p class="mb-2">Mahamudul Hasan</p>
+                <p class="mb-2">Social Media Marketer</p>
+                <p class="text-stone-500 text-sm mt-8">&copy; 2026 Mahamudul Hasan Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Data Definitions ---
+        const projects = [
+            {
+                id: 1,
+                title: "Real Estate Lead Generation",
+                client: "Rokeya Engineering & Builder's Ltd",
+                type: "Lead Gen & Branding",
+                goal: "Generate leads and increase page reach.",
+                work: [
+                    "Created professional Facebook Page structure (Bio, CTA, Branding).",
+                    "Designed high-converting image & video ads.",
+                    "Implemented interest-based audience targeting for real estate investors.",
+                    "Planned and executed a boosting strategy.",
+                    "Scheduled consistent posts and managed ad campaigns."
+                ],
+                result: "Improved page reach significantly, increased engagement, and successfully set up a pipeline for lead generation.",
+                chartData: [65, 85, 40] // Mock data relative metrics: Reach, Engagement, Leads
+            },
+            {
+                id: 2,
+                title: "Restaurant Brand Awareness",
+                client: "Fairy Land Restaurant",
+                type: "Local Awareness",
+                goal: "Increase brand awareness and page likes in the local area.",
+                work: [
+                    "Designed appetizing food posts.",
+                    "Wrote engaging captions with strong Call-to-Action (CTA).",
+                    "Planned a Page-Like campaign to build social proof.",
+                    "Targeted local audience within specific radius."
+                ],
+                result: "Successful practice campaign that boosted local visibility and established a brand voice.",
+                chartData: [90, 60, 20] // Mock data: Awareness, Likes, Clicks
+            }
+        ];
+
+        let currentProjectIndex = 0;
+        let projectChart = null;
+
+        // --- Functions ---
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Close mobile menu if open
+            const menu = document.getElementById('mobile-menu');
+            if (menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function renderProjectList() {
+            const container = document.getElementById('project-list');
+            container.innerHTML = '';
+
+            projects.forEach((proj, index) => {
+                const btn = document.createElement('button');
+                const isActive = index === currentProjectIndex;
+                btn.className = `w-full text-left p-4 rounded-lg transition-all border-l-4 ${
+                    isActive 
+                    ? 'bg-white border-orange-500 shadow-md' 
+                    : 'bg-stone-100 border-transparent hover:bg-white hover:shadow-sm'
+                }`;
+                btn.onclick = () => loadProject(index);
+                btn.innerHTML = `
+                    <div class="font-bold text-stone-800">${proj.title}</div>
+                    <div class="text-xs text-stone-500 mt-1">${proj.client}</div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function loadProject(index) {
+            currentProjectIndex = index;
+            renderProjectList();
+            
+            const project = projects[index];
+            const container = document.getElementById('project-detail-container');
+            
+            // Build Work List HTML
+            const workListHtml = project.work.map(item => `<li class="flex items-start"><span class="mr-2 text-orange-500">✓</span> ${item}</li>`).join('');
+
+            container.innerHTML = `
+                <div class="flex flex-col h-full animate-fadeIn">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <span class="inline-block px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full mb-2 font-semibold">${project.type}</span>
+                            <h3 class="text-2xl font-bold text-stone-900">${project.title}</h3>
+                            <p class="text-sm text-stone-500 font-medium">Client: ${project.client}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <h4 class="font-bold text-stone-800 mb-2 border-b border-stone-200 pb-1">🔍 Goal</h4>
+                            <p class="text-stone-600 mb-4 text-sm">${project.goal}</p>
+                            
+                            <h4 class="font-bold text-stone-800 mb-2 border-b border-stone-200 pb-1">🛠 Work Done</h4>
+                            <ul class="text-stone-600 text-sm space-y-2 mb-4">
+                                ${workListHtml}
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-bold text-stone-800 mb-2 border-b border-stone-200 pb-1">📊 Impact Overview</h4>
+                             <p class="text-xs text-stone-400 mb-2 italic">Visual representation of key metrics</p>
+                             <div class="relative w-full h-48">
+                                <canvas id="projectImpactChart"></canvas>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 p-4 rounded-lg border border-orange-100 mt-auto">
+                        <h4 class="font-bold text-orange-900 text-sm mb-1">💡 Result</h4>
+                        <p class="text-stone-700 text-sm">${project.result}</p>
+                    </div>
+                </div>
+            `;
+
+            renderProjectChart(project.chartData);
+        }
+
+        function renderProjectChart(data) {
+            const ctx = document.getElementById('projectImpactChart').getContext('2d');
+            
+            if (projectChart) {
+                projectChart.destroy();
+            }
+
+            projectChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Reach', 'Engagement', 'Conversions'],
+                    datasets: [{
+                        label: 'Campaign Performance Score',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(234, 88, 12, 0.7)',
+                            'rgba(234, 88, 12, 0.5)',
+                            'rgba(234, 88, 12, 0.3)'
+                        ],
+                        borderColor: '#ea580c',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Impact Score: ' + context.raw;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { display: false },
+                            grid: { display: false }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderSkillsChart() {
+            const ctx = document.getElementById('skillsRadarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Strategy', 'Content Creation', 'Paid Ads', 'Analytics', 'Video Editing', 'Targeting'],
+                    datasets: [{
+                        label: 'Skill Proficiency',
+                        data: [85, 90, 80, 75, 85, 88],
+                        fill: true,
+                        backgroundColor: 'rgba(234, 88, 12, 0.2)',
+                        borderColor: '#ea580c',
+                        pointBackgroundColor: '#ea580c',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#ea580c'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: { borderWidth: 3 }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            pointLabels: {
+                                font: { size: 12, family: 'Inter' },
+                                color: '#44403c'
+                            },
+                            ticks: { display: false, backdropColor: 'transparent' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSkillsChart();
+            loadProject(0); // Load first project by default
+        });
+
+    </script>
+</body>
+</html>
