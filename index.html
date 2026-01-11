@@ -3,300 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahamudul Hasan | Social Media Marketing Portfolio</title>
+    <title>Mahamudul Hasan | Strategic Social Media Markeing </title>
+    
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Frameworks -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            height: 350px;
-            max-height: 400px;
-            margin: 0 auto;
+        :root {
+            --emerald: #153129;
+            --ember: #FF6B00;
+            --clay: #F5F5F7;
+            --glass: rgba(255, 255, 255, 0.7);
+            --dark: #1D1D1F;
         }
-        @media (max-width: 640px) {
-            .chart-container { height: 300px; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        /* Cursor System - Only for Desktop */
+        @media (min-width: 1024px) {
+            * { cursor: none; }
+            #custom-cursor { position: fixed; width: 12px; height: 12px; background: var(--ember); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s ease; }
+            #cursor-follower { position: fixed; width: 40px; height: 40px; border: 1px solid var(--ember); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
         }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--clay); color: var(--dark); overflow-x: hidden; line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; letter-spacing: -0.04em; }
+
+        /* Background Canvas */
+        #canvas-container { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; opacity: 0.4; }
+
+        /* Apple Style Glassmorphism */
+        .apple-glass { background: var(--glass); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 30px; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        @media (hover: hover) {
+            .apple-glass:hover { transform: translateY(-8px); border-color: var(--ember); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1); }
         }
-        .service-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
+        .text-huge { font-size: clamp(2.5rem, 10vw, 8rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.05em; }
+        .gradient-text { background: linear-gradient(135deg, var(--emerald) 0%, #4a7c6d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .btn-kinetic { position: relative; background: var(--emerald); color: white; padding: 14px 28px; border-radius: 100px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; transition: all 0.4s ease; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .btn-kinetic:hover { transform: translateY(-3px); background: #000; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+        /* Arsenal Grid Layout */
+        .arsenal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 16px; width: 100%; }
+        .tool-card { background: white; border-radius: 20px; padding: 24px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s ease; }
+        .tool-card:hover { border-color: var(--ember); transform: scale(1.05); }
+        .tool-card img { width: 32px; height: 32px; object-fit: contain; }
+        .tool-card span { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.5; text-align: center; }
+
+        .reveal { opacity: 0; transform: translateY(40px); }
+        
+        #mainChart { max-height: 350px !important; }
     </style>
-    <!-- Chosen Palette: Professional Warm Neutrals -->
-    <!-- Application Structure Plan: Linear storytelling flow starting with a strong CTA (Upwork Link), moving into visual skills proof (Radar Chart), and ending with detailed project case studies. This structure is designed to convert visitors into clients by proving both technical knowledge and practical results. -->
-    <!-- Visualization & Content Choices: 
-        1. Radar Chart: Showcases the multi-disciplinary nature of SMM (Creative + Data).
-        2. Dynamic Project Switcher: Allows users to explore specific niches (Real Estate vs. Food) without leaving the screen.
-        3. Upwork Integration: High-visibility buttons for direct lead conversion.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased selection:bg-orange-100 selection:text-orange-900">
+<body>
+
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+    <div id="canvas-container"></div>
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 glass-panel shadow-sm w-full border-b border-stone-200">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold text-orange-600">MH.</span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <button onclick="scrollToSection('hero')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Home</button>
-                    <button onclick="scrollToSection('about')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">About</button>
-                    <button onclick="scrollToSection('services')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Services</button>
-                    <button onclick="scrollToSection('portfolio')" class="text-stone-600 hover:text-orange-600 transition-colors text-sm font-medium">Portfolio</button>
-                    <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-700 transition-all">Hire Me</a>
-                </div>
-                <div class="md:hidden">
-                    <button onclick="toggleMobileMenu()" class="text-stone-600 hover:text-orange-600 focus:outline-none text-2xl">☰</button>
-                </div>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <div class="flex flex-col space-y-2">
-                    <button onclick="scrollToSection('hero')" class="text-stone-600 text-left px-2 py-2">Home</button>
-                    <button onclick="scrollToSection('about')" class="text-stone-600 text-left px-2 py-2">About</button>
-                    <button onclick="scrollToSection('portfolio')" class="text-stone-600 text-left px-2 py-2">Portfolio</button>
-                    <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="text-orange-600 font-bold px-2 py-2">Hire on Upwork</a>
-                </div>
+    <nav id="navbar" class="fixed top-0 w-full z-[1000] p-4 lg:p-8 flex justify-between items-center transition-all duration-500">
+        <div class="flex items-center gap-3">
+            <div class="w-20 h-20 bg-[#153129] rounded-xl flex items-center justify-center text-white font-black">MH</div>
+            <div class="flex flex-col">
+                <span class="font-extrabold text-[12px] tracking-tighter leading-none">MAHAMUDUL HASAN</span>
+                <span class="text-[8px] font-black uppercase tracking-[0.3em] opacity-40">Strategic Performance</span>
             </div>
         </div>
+        <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.4em] opacity-50">
+            <a href="#projects" class="hover:text-[#FF6B00] transition-colors">Work</a>
+            <a href="#arsenal" class="hover:text-[#FF6B00] transition-colors">Tools</a>
+            <a href="#data" class="hover:text-[#FF6B00] transition-colors">Growth</a>
+        </div>
+        <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="btn-kinetic !py-3 !px-6 !text-[10px]">Hire Elite</a>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="relative bg-white overflow-hidden border-b border-stone-100">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:flex items-center">
-            <div class="lg:w-2/3">
-                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold tracking-wide uppercase mb-6">
-                    Verified Upwork Freelancer
-                </span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-stone-900 tracking-tight leading-tight">
-                    Mahamudul Hasan<br/>
-                    <span class="text-orange-600">Growth-Driven SMM</span>
-                </h1>
-                <p class="mt-6 text-xl text-stone-500 max-w-2xl">
-                    I specialize in scaling brands on Facebook and Instagram through high-converting Ads Manager strategies and engaging visual content.
-                </p>
-                <div class="mt-10 flex flex-wrap gap-4">
-                    <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-orange-600 hover:bg-orange-700 shadow-xl shadow-orange-200 transition-all transform hover:-translate-y-1">
-                        Hire Me on Upwork
-                    </a>
-                    <button onclick="scrollToSection('portfolio')" class="flex items-center justify-center px-8 py-4 border-2 border-stone-200 text-lg font-bold rounded-xl text-stone-700 bg-white hover:bg-stone-50 transition-all">
-                        Explore Portfolio
-                    </button>
-                </div>
-            </div>
-            <div class="hidden lg:block lg:w-1/3 relative">
-                <div class="w-72 h-72 bg-orange-50 rounded-full flex items-center justify-center text-9xl text-orange-100 font-black">
-                    SMM
-                </div>
-            </div>
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+        <div class="reveal mb-8 inline-flex items-center gap-3 px-5 py-2 rounded-full apple-glass">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+            </span>
+            <span class="text-[9px] font-black uppercase tracking-[0.4em] opacity-60">Verified Results 2026</span>
+        </div>
+        <h1 class="text-huge mb-8 reveal">
+            <span class="opacity-20">ENGINEERING</span> <br/>
+            <span class="gradient-text">VISUAL GROWTH.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg md:text-2xl font-light opacity-50 mb-12 reveal">
+            Architecting scalable brand identities through high-retention Meta strategies and viral algorithmic hooks.
+        </p>
+        <div class="reveal flex flex-wrap justify-center gap-4">
+            <a href="#projects" class="btn-kinetic">Explore Archive</a>
+            <a href="#data" class="px-8 py-4 rounded-full border border-black/10 font-bold text-sm hover:bg-white transition-colors">View Live Data</a>
         </div>
     </section>
 
-    <!-- About & Visualized Skills -->
-    <section id="about" class="py-20 bg-stone-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6 reveal">
+            <div>
+                <span class="text-[#FF6B00] font-black uppercase tracking-[0.5em] text-[10px] mb-2 block">Case Units</span>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter">Selected <span class="opacity-20 italic">Impact.</span></h2>
+            </div>
+            <p class="text-sm opacity-40 max-w-[280px]">Strategic sprints focused on conversion and retention metrics.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <!-- Rokeya -->
+            <div class="md:col-span-8 apple-glass p-8 md:p-12 min-h-[450px] flex flex-col justify-between reveal group">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-stone-900 mb-6">Expertise Overview</h2>
-                    <p class="text-lg text-stone-600 mb-8 leading-relaxed">
-                        I am a social media marketer specializing in Facebook & Instagram. I have hands-on experience in content creation, video editing, Facebook boosting, and marketing strategy. I am continuously learning advanced Facebook Ads Manager techniques to stay ahead of the curve.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-white rounded-xl shadow-sm border border-stone-200">
-                            <div class="text-2xl mb-1">📢</div>
-                            <div class="font-bold text-stone-800">Meta Ads</div>
-                            <div class="text-xs text-stone-500">Campaign Management</div>
-                        </div>
-                        <div class="p-4 bg-white rounded-xl shadow-sm border border-stone-200">
-                            <div class="text-2xl mb-1">🎨</div>
-                            <div class="font-bold text-stone-800">Creatives</div>
-                            <div class="text-xs text-stone-500">Image & Video Ads</div>
-                        </div>
+                    <div class="flex justify-between items-center mb-8">
+                        <span class="bg-[#153129] text-white text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">Real Estate Elite</span>
+                        <span class="text-4xl font-black opacity-5">01</span>
                     </div>
+                    <h3 class="text-4xl md:text-6xl font-black mb-6 leading-none tracking-tighter group-hover:text-[#FF6B00] transition-colors">Rokeya Engineering</h3>
+                    <p class="text-lg opacity-50 max-w-md">High-ticket lead generation for luxury interior engineering. Meta Ads optimized for HNIs.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-xl border border-stone-100">
-                    <h3 class="text-xl font-bold text-stone-800 mb-6 text-center">Skill Balance Radar</h3>
-                    <div class="chart-container">
-                        <canvas id="skillsRadarChart"></canvas>
+                <div class="flex items-center justify-between pt-8 border-t border-black/5">
+                    <a href="https://www.rokeyainterior.com" target="_blank" class="font-black italic flex items-center gap-3 hover:text-[#FF6B00]">Visit Live Architecture →</a>
+                    <div class="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-[#FF6B00] transition-all">
+                        <svg class="w-6 h-6 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Project Showcase -->
-    <section id="portfolio" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <!-- BIM SaaS -->
+            <div class="md:col-span-4 apple-glass p-8 md:p-10 flex flex-col justify-between reveal group">
                 <div>
-                    <h2 class="text-4xl font-extrabold text-stone-900">Practical Work</h2>
-                    <p class="text-stone-500 mt-2 text-lg">Case studies from real-world campaigns.</p>
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="bg-black text-white text-[8px] font-black px-3 py-1 rounded-full uppercase">B2B SaaS</span>
+                        <span class="text-3xl font-black opacity-5">02</span>
+                    </div>
+                    <h3 class="text-3xl font-black mb-4 group-hover:text-[#FF6B00]">BIM LinkedIn Authority</h3>
+                    <p class="text-xs opacity-50">Founder-led brand positioning and funnel architecture for engineering software platforms.</p>
                 </div>
-                <div id="project-tabs" class="flex bg-stone-100 p-1 rounded-xl">
-                    <!-- Populated by JS -->
+                <div class="text-5xl font-black opacity-10">SAAS</div>
+            </div>
+
+            <!-- AI Golf -->
+            <div class="md:col-span-6 apple-glass p-8 md:p-10 flex flex-col justify-between reveal group">
+                <div>
+                    <h3 class="text-3xl font-black mb-4 group-hover:text-[#FF6B00]">Golf AI Viral Sprint</h3>
+                    <p class="text-sm opacity-50 mb-6">Engineered 72.2K organic views within 30 days using precise algorithmic storytelling.</p>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-5xl font-black text-[#FF6B00]">72K+</div>
+                    <span class="text-[10px] font-black opacity-30 uppercase">Views Secured</span>
                 </div>
             </div>
 
-            <div id="active-project-container" class="bg-stone-50 rounded-3xl p-8 md:p-12 border border-stone-200">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Grid -->
-    <section id="services" class="py-20 bg-stone-900 text-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Core Marketing Solutions</h2>
-                <div class="w-20 h-1 bg-orange-600 mx-auto"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="service-card p-8 bg-stone-800 rounded-2xl border border-stone-700">
-                    <div class="text-4xl mb-4">⚙️</div>
-                    <h3 class="text-xl font-bold mb-3">Page Optimization</h3>
-                    <p class="text-stone-400 text-sm">Professional profile setups, bio writing, and CTA optimization for maximum conversion.</p>
+            <!-- Street Artist -->
+            <div class="md:col-span-6 apple-glass p-8 md:p-10 flex flex-col justify-between reveal group">
+                <div>
+                    <h3 class="text-3xl font-black mb-4 group-hover:text-[#FF6B00]">Street Artist Growth</h3>
+                    <p class="text-sm opacity-50">Instagram/Facebook growth strategy focused on authentic narrative and organic reaction hooks.</p>
                 </div>
-                <div class="service-card p-8 bg-stone-800 rounded-2xl border border-stone-700">
-                    <div class="text-4xl mb-4">📈</div>
-                    <h3 class="text-xl font-bold mb-3">Ads Strategy</h3>
-                    <p class="text-stone-400 text-sm">Advanced audience targeting using Meta Ads Manager for awareness and lead generation.</p>
-                </div>
-                <div class="service-card p-8 bg-stone-800 rounded-2xl border border-stone-700">
-                    <div class="text-4xl mb-4">🎬</div>
-                    <h3 class="text-xl font-bold mb-3">Ad Creatives</h3>
-                    <p class="text-stone-400 text-sm">Designing eye-catching visuals and video ads using Canva, Premiere Pro, and Illustrator.</p>
+                <div class="flex gap-2">
+                    <span class="text-[9px] font-bold px-3 py-1 bg-black/5 rounded-full uppercase">Meta</span>
+                    <span class="text-[9px] font-bold px-3 py-1 bg-black/5 rounded-full uppercase">Growth</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer / Final CTA -->
-    <footer class="bg-white py-20">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold text-stone-900 mb-6">Ready to Scale Your Business?</h2>
-            <p class="text-stone-500 text-lg mb-10">Available for long-term collaborations and one-off campaign setups.</p>
-            <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="inline-block px-12 py-5 bg-stone-900 text-white text-xl font-bold rounded-2xl hover:bg-orange-600 transition-all transform hover:scale-105 shadow-2xl">
-                Hire me on Upwork
-            </a>
-            <div class="mt-16 pt-8 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center text-sm text-stone-400 gap-4">
-                <p>&copy; 2026 Mahamudul Hasan Portfolio</p>
-                <div class="flex space-x-6">
-                    <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="hover:text-orange-600">Upwork Profile</a>
-                    <span>Dhaka, Bangladesh</span>
+    <!-- Working Arsenal (Restored) -->
+    <section id="arsenal" class="py-24 px-6 bg-white/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-[#FF6B00] font-black uppercase tracking-[0.5em] text-[10px] mb-3 block">Expert Toolkit</span>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter">Working <span class="opacity-20">Arsenal.</span></h2>
+            </div>
+
+            <div class="arsenal-grid reveal">
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Adobe_Creative_Cloud_logo.svg" alt="Adobe"><span>Creative Cloud</span></div>
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="PS"><span>Photoshop</span></div>
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg" alt="AI"><span>Illustrator</span></div>
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg" alt="AE"><span>After Effects</span></div>
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg" alt="PR"><span>Premiere Pro</span></div>
+                <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma"><span>Figma UI</span></div>
+                <div class="tool-card"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968382.png" alt="CapCut"><span>CapCut Pro</span></div>
+                <div class="tool-card bg-emerald-50"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta"><span>Meta Ads</span></div>
+                <div class="tool-card bg-blue-50"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Google_AdSense_logo.svg" alt="Google"><span>AdSense</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Data -->
+     <section id="data" class="py-24 sm:py-40 bg-black text-white">
+        <div class="max-w-[1600px] mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center relative z-10">
+            <div class="reveal">
+                <span class="text-[#FF6B00] font-black uppercase tracking-[0.5em] text-[10px] mb-6 sm:mb-8 block">Analytics Matrix</span>
+                <h2 class="text-huge mb-8 sm:mb-12">RESULTS <br/><span class="text-[#FF6B00]">SPEAK.</span></h2>
+                <p class="text-lg sm:text-2xl font-light opacity-50 mb-12 sm:mb-16 leading-relaxed">We bypass vanity metrics. We focus on the performance loop: Audit, Launch, Optimize, Scale.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
+                    <div class="border-l-2 border-[#FF6B00] pl-6 sm:pl-10">
+                        <div class="text-[8px] sm:text-xs font-black uppercase opacity-30 tracking-widest mb-2 sm:mb-4">Reach Increase</div>
+                        <div class="text-5xl sm:text-7xl font-black tracking-tighter">+1,034%</div>
+                    </div>
+                    <div class="border-l-2 border-white/10 pl-6 sm:pl-10">
+                        <div class="text-[8px] sm:text-xs font-black uppercase opacity-30 tracking-widest mb-2 sm:mb-4">Verified Reactions</div>
+                        <div class="text-5xl sm:text-7xl font-black tracking-tighter">5.1K</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="apple-glass bg-white/5 border-white/10 p-6 sm:p-12 reveal relative min-h-[400px] sm:min-h-[500px]">
+                <div class="mb-8 sm:mb-12 flex justify-between items-center">
+                    <h4 class="text-base sm:text-xl font-black tracking-tight">Campaign Velocity Graph</h4>
+                    <span class="text-[8px] sm:text-[10px] font-black opacity-40 uppercase tracking-widest">Evidence</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+                <div class="mt-8 text-[8px] sm:text-[10px] font-bold opacity-30 leading-relaxed">
+                    *Data derived from official Meta Business Suite exports of the 2024-2025 performance period.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer class="py-40 text-center px-6">
+        <div class="reveal">
+            <h2 class="text-huge mb-16">READY TO <span class="text-[#FF6B00]">DOMINATE?</span></h2>
+            <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" target="_blank" class="btn-kinetic !text-xl !px-12 !py-6 shadow-2xl">Initiate Strategy Call</a>
+            <div class="mt-32 pt-16 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-40 text-[10px] font-black uppercase tracking-widest">
+                <span>© Mahamudul Hasan 2026</span>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-black">LinkedIn</a>
+                    <a href="#" class="hover:text-black">Instagram</a>
+                    <a href="https://www.upwork.com/freelancers/~01ffae437be6260527" class="hover:text-black">Upwork</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        const projectData = [
-            {
-                id: 0,
-                title: "Real Estate Growth",
-                client: "Rokeya Engineering and Builder's Ltd",
-                goal: "Lead Generation & Reach Expansion",
-                work: [
-                    "Full Meta Ads Manager campaign setup",
-                    "Interest-based interest targeting for real estate",
-                    "High-converting video ad creative design",
-                    "Performance auditing and monthly reporting"
-                ],
-                impact: [85, 70, 90], // Reach, Engagement, Conversion
-                summary: "Developed a professional brand presence and generated a steady stream of leads for construction projects."
-            },
-            {
-                id: 1,
-                title: "Local Restaurant SMM",
-                client: "Fairy Land Restaurant",
-                goal: "Brand Awareness & Local Engagement",
-                work: [
-                    "Food post design and caption strategy",
-                    "Page-like growth campaign planning",
-                    "Local geographic targeting for dine-in awareness",
-                    "Engagement optimization strategy"
-                ],
-                impact: [95, 80, 40], // Reach, Engagement, Conversion
-                summary: "Successfully built a local social community and established the restaurant as a top-of-mind choice in the area."
-            }
-        ];
-
-        let activeProjectId = 0;
-        let impactChart = null;
-
-        function renderTabs() {
-            const container = document.getElementById('project-tabs');
-            container.innerHTML = projectData.map(p => `
-                <button onclick="setActiveProject(${p.id})" class="px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeProjectId === p.id ? 'bg-white shadow-sm text-orange-600' : 'text-stone-500'}">
-                    ${p.title}
-                </button>
-            `).join('');
-        }
-
-        function setActiveProject(id) {
-            activeProjectId = id;
-            renderTabs();
-            renderActiveProject();
-        }
-
-        function renderActiveProject() {
-            const project = projectData[activeProjectId];
-            const container = document.getElementById('active-project-container');
+        // --- 3D Background Logic (Kinetic Wireframe) ---
+        const initBg = () => {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             
-            container.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fadeIn">
-                    <div>
-                        <div class="text-orange-600 font-bold mb-2">CLIENT: ${project.client}</div>
-                        <h3 class="text-3xl font-extrabold text-stone-900 mb-4">${project.goal}</h3>
-                        <p class="text-stone-600 mb-8">${project.summary}</p>
-                        
-                        <div class="space-y-4">
-                            <h4 class="font-bold text-stone-800 flex items-center">
-                                <span class="bg-orange-100 text-orange-600 p-1 rounded mr-2">📋</span> Core Execution
-                            </h4>
-                            <ul class="space-y-2">
-                                ${project.work.map(w => `<li class="text-stone-600 flex items-center text-sm"><span class="text-orange-500 mr-2">•</span> ${w}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-inner border border-stone-100">
-                        <h4 class="text-center font-bold text-stone-700 mb-4">Campaign Performance Indices</h4>
-                        <div class="h-64 relative">
-                            <canvas id="impactChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            `;
-            initImpactChart(project.impact);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+            const material = new THREE.MeshNormalMaterial({ wireframe: true, transparent: true, opacity: 0.15 });
+            const knot = new THREE.Mesh(geometry, material);
+            scene.add(knot);
+
+            camera.position.z = 30;
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                knot.rotation.x += 0.002;
+                knot.rotation.y += 0.003;
+                renderer.render(scene, camera);
+            };
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        initBg();
+
+        // --- Custom Cursor Logic ---
+        if (window.innerWidth >= 1024) {
+            const cursor = document.getElementById('custom-cursor');
+            const follower = document.getElementById('cursor-follower');
+            
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0 });
+                gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+            });
+
+            document.querySelectorAll('a, .tool-card, .apple-glass').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(follower, { scale: 1.5, borderColor: '#FF6B00', duration: 0.3 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(follower, { scale: 1, borderColor: '#FF6B00', duration: 0.3 });
+                });
+            });
         }
 
-        function initImpactChart(data) {
-            const ctx = document.getElementById('impactChart').getContext('2d');
-            if (impactChart) impactChart.destroy();
-            
-            impactChart = new Chart(ctx, {
-                type: 'bar',
+        // --- Reveal System ---
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal').forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                opacity: 1, y: 0, duration: 1, ease: "power4.out"
+            });
+        });
+
+        // --- Growth Chart ---
+              const initChart = () => {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(255, 107, 0, 0.4)');
+            gradient.addColorStop(1, 'rgba(255, 107, 0, 0)');
+
+            new Chart(ctx, {
+                type: 'line',
                 data: {
-                    labels: ['Reach', 'Engagement', 'Conversions'],
+                    labels: ['Jan', 'Mar', 'Jun', 'Sep', 'Dec'],
                     datasets: [{
-                        data: data,
-                        backgroundColor: ['#ea580c', '#fb923c', '#fdba74'],
-                        borderRadius: 12
+                        label: 'Reach Growth',
+                        data: [1500, 4200, 8500, 11000, 14600],
+                        borderColor: '#FF6B00',
+                        borderWidth: 4,
+                        tension: 0.5,
+                        fill: true,
+                        backgroundColor: gradient,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#FF6B00',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 8
                     }]
                 },
                 options: {
@@ -304,49 +344,27 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { beginAtZero: true, max: 100, ticks: { display: false }, grid: { display: false } },
-                        x: { grid: { display: false } }
+                        y: { display: false },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { 
+                                color: 'rgba(255,255,255,0.3)', 
+                                font: { family: 'Lexend', size: 9, weight: 'bold' }
+                            }
+                        }
                     }
                 }
             });
-        }
-
-        function initSkillsRadar() {
-            const ctx = document.getElementById('skillsRadarChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Ads Manager', 'Creative Design', 'Copywriting', 'Analytics', 'Strategy', 'Video Editing'],
-                    datasets: [{
-                        data: [95, 88, 75, 82, 90, 85],
-                        backgroundColor: 'rgba(234, 88, 12, 0.2)',
-                        borderColor: '#ea580c',
-                        pointBackgroundColor: '#ea580c'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: { grid: { color: '#f5f5f4' }, ticks: { display: false } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-
-        window.onload = () => {
-            initSkillsRadar();
-            setActiveProject(0);
         };
+        initChart();
+
+        // --- Navbar Logic ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            nav.classList.toggle('bg-[#F5F5F7]/80', window.scrollY > 50);
+            nav.classList.toggle('backdrop-blur-md', window.scrollY > 50);
+            nav.classList.toggle('border-b', window.scrollY > 50);
+        });
     </script>
 </body>
 </html>
